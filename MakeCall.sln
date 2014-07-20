@@ -37,6 +37,7 @@ Global
 		{5F2FA5BF-1F09-4F33-B6B1-97B9A90B81A3}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{5F2FA5BF-1F09-4F33-B6B1-97B9A90B81A3}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{5F2FA5BF-1F09-4F33-B6B1-97B9A90B81A3}.Release|x86.ActiveCfg = Release|Any CPU
+		{5F2FA5BF-1F09-4F33-B6B1-97B9A90B81A3}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
