@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace MakeCall
+namespace MakeCallW
 {
     public static class Settings
     {
@@ -18,8 +18,19 @@ namespace MakeCall
             get
             {
                 string s = ConfigurationManager.AppSettings["InDir"];
-                if (s == "" || !Directory.Exists(s))
-                    throw new ConfigurationErrorsException("Укажите корректную папку входящих задач InDir в файле MakeCall.exe.Config");
+                if (s == "")
+                    s = "In";
+                if (!Directory.Exists(s))
+                {
+                    try
+                    {
+                        Directory.CreateDirectory(s);
+                    }
+                    catch
+                    {
+                        return "";
+                    }
+                }
                 return Path.GetFullPath(s);
             }
         }
@@ -32,8 +43,19 @@ namespace MakeCall
             get
             {
                 string s = ConfigurationManager.AppSettings["OutDir"];
-                if (s == "" || !Directory.Exists(s))
-                    throw new ConfigurationErrorsException("Укажите корректную папку обработанных задач OutDir в файле MakeCall.exe.Config");
+                if (s == "")
+                    s = "In";
+                if (!Directory.Exists(s))
+                {
+                    try
+                    {
+                        Directory.CreateDirectory(s);
+                    }
+                    catch
+                    {
+                        return "";
+                    }
+                }
                 return Path.GetFullPath(s);
             }
         }
