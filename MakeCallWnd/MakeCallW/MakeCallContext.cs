@@ -28,6 +28,7 @@ namespace MakeCallW
 
         #endregion
 
+        #region ** ctor
         public MakeCallContext()
         {
 
@@ -37,6 +38,9 @@ namespace MakeCallW
 
             Run();
         }
+        #endregion
+
+        #region ** methods
         void Run()
         {
             _startDateTime = DateTime.Now;
@@ -225,7 +229,9 @@ namespace MakeCallW
                 _notifyIcon.BalloonTipIcon = ToolTipIcon.Info;
 
         }
-        #region TapiManager
+        #endregion
+
+        #region ** TapiManager
         static TapiManager _tapiManager = null;
         public TapiManager TapiManager
         {
