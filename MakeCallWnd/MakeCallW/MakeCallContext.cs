@@ -51,12 +51,12 @@ namespace MakeCallW
         {
             if (Settings.InDir == "")
             {
-                _lastError = "Папка для входящих указана неверно.";
+                _lastError = "Папка для входящих указана неверно";
                 return false;
             }
             if (Settings.OutDir == "")
             {
-                _lastError = "Папка для исходящих указана неверно.";
+                _lastError = "Папка для исходящих указана неверно";
                 return false;
             }
             return true;
@@ -90,7 +90,8 @@ namespace MakeCallW
                 var outFileNameSuccess = Path.GetFullPath(Settings.OutDir) + Path.DirectorySeparatorChar + Path.GetFileName(fileName);
                 var outFileNameFail = Path.ChangeExtension(outFileNameSuccess, "err");
 
-
+                if (File.Exists(outFileNameFail))
+                    File.Delete(outFileNameFail);
                 File.Move(fileName, outFileNameFail);
 
 
@@ -99,12 +100,15 @@ namespace MakeCallW
                 {
                     var fromNo = taskStrings[0];
                     var toNo = taskStrings[1];
-                    
 
-                    TapiLine tapiLine = TapiManager.Lines.First(l => l.Addresses.Length > 0 && l.Addresses[0].Address == fromNo);
-                    if (tapiLine != null)
-                        // Распараллеливаем задачу
-                        Task.Factory.StartNew(() => ProcessCall(tapiLine, fromNo, toNo, outFileNameSuccess, outFileNameFail));
+
+                    if (TapiManager.Lines.Any(l => l.Addresses.Length > 0 && l.Addresses[0].Address == fromNo))
+                    { 
+                        TapiLine tapiLine = TapiManager.Lines.First(l => l.Addresses.Length > 0 && l.Addresses[0].Address == fromNo);
+                        if (tapiLine != null)
+                            // Распараллеливаем задачу
+                            Task.Factory.StartNew(() => ProcessCall(tapiLine, fromNo, toNo, outFileNameSuccess, outFileNameFail));
+                    }
                     else
                         _lastUnsuccessCall =  "Не найдена линия: " + fromNo + ">" + toNo;
                 }
@@ -206,7 +210,7 @@ namespace MakeCallW
                 sb.AppendLine("Последний успешный звонок: " + _lastSuccessCall);
 
             if (_lastUnsuccessCall != "")
-                sb.AppendLine("Последний неуспешный звонок: " + _lastUnsuccessCall);
+                sb.AppendLine(_lastUnsuccessCall);
 
             if (_lastError != "")
                 sb.AppendLine("Последняя ошибка: " + _lastError);
